@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('alamat_pelanggans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pelanggan_id')->constrained('users')->onUpdate('cascade')->onDelete('caccade');
+            $table->foreignId('pelanggan_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('nama',25);
             $table->string('no_hp',16);
             $table->text('provinsi')->nullable();
