@@ -24,7 +24,7 @@ class DataAkunPage extends Component
         $d->nama = $this->nama;
         $d->username = $this->username;
         $d->password = Hash::make($this->password);
-        $d->role = $this->role;   
+        $d->role = $this->role;
         $d->save();
 
         $this->buatPage = false;
@@ -43,6 +43,7 @@ class DataAkunPage extends Component
         $this->username = $d->username;
         $this->role = $d->role;
         $this->isaktif = $d->isaktif;
+        $this->password = null;
 
         $this->editPage = true;
 
@@ -56,8 +57,8 @@ class DataAkunPage extends Component
         if ($this->password) {
             $d->password = Hash::make($this->password);
         }
-        $d->role = $this->role;   
-        $d->isaktif = $this->isaktif;   
+        $d->role = $this->role;
+        $d->isaktif = $this->isaktif;
         $d->save();
 
         $this->editPage = false;

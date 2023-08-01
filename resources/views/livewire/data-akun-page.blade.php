@@ -65,7 +65,7 @@
                         </div>
                         <div class="mb-2">
                             <label for="">Password</label>
-                            <input required wire:model='password' type="text" class="form-control">
+                            <input  wire:model='password' type="text" class="form-control">
                         </div>
                         <div class="mb-2">
                             <label for="">role</label>
