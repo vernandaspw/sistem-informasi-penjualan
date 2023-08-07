@@ -149,14 +149,14 @@
                                     <div class="card-footer">
                                         <form wire:submit.prevent="addCart('{{ $data_barang->id }}')">
                                             <input type="text" hidden wire:model='barang_qty' value="1">
-                                            <button @if (auth()->user()->role != 'pelanggan') disabled @endif
+                                            <button @if (Auth::check() && auth()->user()->role != 'pelanggan') disabled @endif
                                                 @if (
                                                     $data_barang->data_stok->where('tipe', 'masuk')->sum('stok_jual') -
                                                         $data_barang->data_stok->where('tipe', 'keluar')->sum('stok_jual') <
                                                         1) disabled @endif type="submit"
                                                 class="btn btn-primary form-control">
 
-                                                @if (auth()->user()->role != 'pelanggan')
+                                                @if (Auth::check() && auth()->user()->role != 'pelanggan')
                                                 Kamu bukan pelanggan
                                                 @else
                                                 <i class="fas fa-shopping-cart text-white"></i> &nbsp;Tambah ke Keranjang
