@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\DataBarang;
+use App\Models\DataStok;
 use App\Models\GambarBarang;
 use App\Models\KategoriBarang;
 use App\Models\SatuanBarang;
@@ -29,7 +30,7 @@ class DataBarangPage extends Component
     public $satuan_barangs = [];
     public $img;
     public $nama, $deskripsi, $kode_barang, $harga, $kategori_barang_id, $satuan_barang_id;
-    
+    public $stok;
     public function buatData()
     {
         $d = new DataBarang();
@@ -52,6 +53,15 @@ class DataBarangPage extends Component
             $this->img = null;
         }
 
+        if ($this->stok) {
+            DataStok::create([
+               'data_barang_id' => $d->id,
+               'tipe' => 'masuk',
+               'stok_jual' => $this->stok,
+               'stok_fisik' => $this->stok,
+            ]);
+        }
+
         $this->buatPage = false;
 
         // $this->emit('success', ['pesan' => 'Berhasil buat data']);
@@ -61,6 +71,13 @@ class DataBarangPage extends Component
     public $ID;
 
     public $galeris = [];
+
+    public $stok_jual, $stok_fisik;
+    public $tipeStok = 'masuk';
+    public $tipeStokJual;
+    public $tipeStokFisik;
+    public $edit_stok_fisik;
+    public $edit_stok_jual;
 
     public function editPageTrue($id)
     {
@@ -74,6 +91,8 @@ class DataBarangPage extends Component
         $this->harga = $d->harga;
 
         $this->galeris = GambarBarang::where('data_barang_id', $this->ID)->get();
+        $this->stok_jual = $d->data_stok->sum('stok_jual');
+        $this->stok_fisik = $d->data_stok->sum('stok_fisik');
 
         $this->editPage = true;
     }
@@ -88,6 +107,41 @@ class DataBarangPage extends Component
         $d->satuan_barang_id = $this->satuan_barang_id;
         $d->harga = $this->harga;
         $d->save();
+
+        if ($this->tipeStok == 'masuk') {
+
+            if ($this->edit_stok_jual) {
+                DataStok::create([
+                    'data_barang_id' => $d->id,
+                    'tipe' => 'masuk',
+                    'stok_jual' => $this->edit_stok_jual,
+                 ]);
+            }
+            if ($this->edit_stok_fisik) {
+                DataStok::create([
+                    'data_barang_id' => $d->id,
+                    'tipe' => 'masuk',
+                    'stok_fisik' => $this->edit_stok_fisik,
+                 ]);
+            }
+
+        }else{
+            if ($this->edit_stok_jual) {
+                DataStok::create([
+                    'data_barang_id' => $d->id,
+                    'tipe' => 'keluar',
+                    'stok_jual' => $this->edit_stok_jual,
+                 ]);
+            }
+            if ($this->edit_stok_fisik) {
+                DataStok::create([
+                    'data_barang_id' => $d->id,
+                    'tipe' => 'keluar',
+                    'stok_fisik' => $this->edit_stok_fisik,
+                 ]);
+            }
+        }
+
 
         if ($this->img) {
             // cek apakah punya gambar

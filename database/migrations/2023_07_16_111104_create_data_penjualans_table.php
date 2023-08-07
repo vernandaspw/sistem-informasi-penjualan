@@ -25,7 +25,7 @@ return new class extends Migration
             $table->decimal('ongkir', 13, 2)->default(0);
             $table->decimal('diskon', 13, 2)->default(0);
             $table->decimal('total', 13, 2)->default(0);
-            $table->enum('status', ['PAYMENT', 'PENDING', 'DIKEMAS', 'DIKIRIM', 'DITERIMA', 'SELESAI']);
+            $table->enum('status', ['PAYMENT', 'PENDING', 'DIKEMAS', 'DIKIRIM', 'DITERIMA', 'SELESAI', 'GAGAL', "BATAL"]);
 
             $table->string('no_mobil', 10)->nullable();
             $table->string('nama_sopir', 25)->nullable();

@@ -20,7 +20,12 @@ class DataBarang extends Model
         return $this->belongsTo(SatuanBarang::class, 'satuan_barang_id', 'id');
     }
 
-    function gambar_barangs() {
+    public function gambar_barangs()
+    {
         return $this->hasMany(GambarBarang::class);
+    }
+    public function data_stok()
+    {
+        return $this->hasMany(DataStok::class);
     }
 }

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="{{ asset('img/logo.png') }}" type="image/x-icon">
-    <title>Indosteel Sumber Buku</title>
+    <title>Indosteel Sumber Berkat</title>
     <link rel="shortcut icon" href="{{ asset('indosteel.png') }}" type="image/x-icon">
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -68,7 +68,7 @@
     @livewireScripts
 
     <!-- MDB -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>   
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
 
     <script src="{{ asset('vendor/sweatalert2/sweetalert2.all.min.js') }}"></script>
     <script>

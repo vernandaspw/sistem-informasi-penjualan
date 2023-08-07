@@ -29,25 +29,30 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('data-barang', []) }}">Data Barang</a>
                     </li>
-                    @if (auth()->user()->role == 'admin')
+                    @if (auth()->user()->role != 'pimpinan')
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
                                 role="button" data-mdb-toggle="dropdown" aria-expanded="false">
                                 Master
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li>
-                                    <a class="dropdown-item" href="{{ url('satuan-barang', []) }}">Satuan Barang</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ url('kategori-barang', []) }}">Kategori Barang</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ url('data-bank', []) }}">Data Bank</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ url('data-akun', []) }}">Data Akun</a>
-                                </li>
+                                @if (auth()->user()->role == 'gudang' || auth()->user()->role == 'admin')
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('satuan-barang', []) }}">Satuan Barang</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('kategori-barang', []) }}">Kategori
+                                            Barang</a>
+                                    </li>
+                                @endif
+                                @if (auth()->user()->role == 'admin')
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('data-bank', []) }}">Data Bank</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('data-akun', []) }}">Data Akun</a>
+                                    </li>
+                                @endif
                             </ul>
                         </li>
                     @endif
@@ -65,7 +70,7 @@
                 <!-- Notifications -->
 
                 <!-- Avatar -->
-               
+
                 <div class="dropdown">
                     <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
                         id="navbarDropdownMenuAvatar" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
@@ -76,7 +81,7 @@
                             alt="Black and White Portrait of a Man" loading="lazy" />
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
-                        
+
                         <li>
                             <a class="dropdown-item" href="javascript:void()">{{ auth()->user()->role }}</a>
                         </li>

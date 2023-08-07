@@ -5,9 +5,11 @@
             <h3>
                 Data Barang
             </h3>
+            @if (auth()->user()->role != 'pimpinan')
             <div class="mt-2">
                 <button wire:click="$toggle('buatPage')" type="button" class="btn btn-primary">Baru</button>
             </div>
+            @endif
         </div>
         <div class="mt-2">
             @if ($buatPage)
@@ -62,6 +64,10 @@
                         <div class="mb-2">
                             <label for="">Gambar barang</label>
                             <input type="file" wire:model='img' class="form-control" multiple>
+                        </div>
+                        <div class="mb-2">
+                            <label for="">Stok barang</label>
+                            <input required wire:model='stok' type="number" class="form-control">
                         </div>
                         <button type="submit" class="btn btn-primary form-control">Simpan</button>
                         <button wire:click="$toggle('buatPage')" type="button" class="btn btn-secondary form-control mt-2">Tutup</button>
@@ -121,7 +127,7 @@
                                 Gambar barang:
                             </div>
                             @foreach ($galeris as $galeri)
-            
+
                                 <img src="{{ Storage::url($galeri->img)  }}" class="me-1 mb-1"
                                     width="70" height="70">
                             @endforeach
@@ -129,6 +135,21 @@
                         <div class="mb-2">
                             <label for="">Gambar barang</label>
                             <input type="file" wire:model='img' class="form-control" multiple>
+                        </div>
+                        <div class="mb-2">
+                            <label for="">Tipe Stok barang</label>
+                            <select class="form-control" wire:model='tipeStok' id="">
+                                <option value="masuk">masuk</option>
+                                <option value="keluar">keluar</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label for="">Stok jual (saat ini {{ $stok_jual }})</label>
+                            <input  wire:model='edit_stok_jual' type="number" class="form-control">
+                        </div>
+                        <div class="mb-2">
+                            <label for="">Stok fisik (saat ini {{ $stok_jual }})</label>
+                            <input  wire:model='edit_stok_fisik' type="number" class="form-control">
                         </div>
                         <button type="submit" class="btn btn-primary form-control">Simpan</button>
                         <button wire:click="$toggle('editPage')" type="button" class="btn btn-secondary form-control mt-2">Tutup</button>
@@ -145,6 +166,8 @@
                             <th>Harga</th>
                             <th>Kategori</th>
                             <th>Satuan</th>
+                            <th>stok jual</th>
+                            <th>stok fisik</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -157,7 +180,10 @@
                                 <td>@uang($data->harga)</td>
                                 <td>{{ $data->kategori_barang->nama }}</td>
                                 <td>{{ $data->satuan_barang->nama }}</td>
+                                <td>{{ $data->data_stok->where('tipe','masuk')->sum('stok_jual') - $data->data_stok->where('tipe','keluar')->sum('stok_jual') }}</td>
+                                <td>{{ $data->data_stok->where('tipe','masuk')->sum('stok_fisik') - $data->data_stok->where('tipe','keluar')->sum('stok_fisik') }}</td>
                                 <td>
+                                    @if (auth()->user()->role != 'pimpinan')
                                     <button wire:click="editPageTrue('{{ $data->id }}')" type="button"
                                         class="btn btn-warning btn-sm btn-rounded">
                                         Edit
@@ -166,6 +192,8 @@
                                         class="btn btn-danger btn-sm btn-rounded">
                                         Hapus
                                     </button>
+                                    @endif
+
                                 </td>
                             </tr>
                         @endforeach
