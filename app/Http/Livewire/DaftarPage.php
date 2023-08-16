@@ -18,12 +18,14 @@ class DaftarPage extends Component
 
     public function daftar()
     {
-        User::create([
+        $user = User::create([
             'nama' => $this->nama,
             'username' => $this->username,
             'password' => $this->password,
             'role' => 'pelanggan',
         ]);
+
+        auth()->login($user, true);
 
         redirect('/');
     }
