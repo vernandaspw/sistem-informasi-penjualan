@@ -61,6 +61,8 @@
                                             {{-- selesai --}}
                                         @endif
                                         {{-- NANTI AJA BATAL --}}
+                                        <button wire:click="batal('{{ $data->id }}')"
+                                            class="btn btn-danger">Batal</button>
                                     @endif
                                 </td>
                             </tr>

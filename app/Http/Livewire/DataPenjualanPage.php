@@ -46,4 +46,10 @@ class DataPenjualanPage extends Component
         $d->status = 'SELESAI';
         $d->save();
     }
+    public function selesai($id)
+    {
+        $d = DataPenjualan::find($id);
+        $d->status = 'BATAL';
+        $d->save();
+    }
 }
