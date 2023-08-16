@@ -66,13 +66,15 @@
                                                 class="btn btn-success">diterima</button>
                                         @endif
                                         @if ($data->status == 'DITERIMA')
-                                            <button wire:click="selesai('{{ $data->id }}')"
-                                                class="btn btn-success">selesai</button>
+                                        <button wire:click="selesai('{{ $data->id }}')"
+                                            class="btn btn-success">selesai</button>
                                             {{-- selesai --}}
-                                        @endif
-                                        {{-- NANTI AJA BATAL --}}
-                                        <button wire:click="batal('{{ $data->id }}')"
-                                            class="btn btn-danger">Batal</button>
+                                            @endif
+                                            {{-- NANTI AJA BATAL --}}
+                                            @if ($data->status_bayar == 'belum')
+                                            <button wire:click="batal('{{ $data->id }}')"
+                                                class="btn btn-danger">Batal</button>
+                                                @endif
                                     @endif
                                 </td>
                             </tr>
