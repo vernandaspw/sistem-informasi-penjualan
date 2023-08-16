@@ -19,7 +19,7 @@
                         <input class="form-control" type="text" placeholder="password" wire:model='password'>
                     </div>
                     <button type="submit" class="form-control btn btn-primary">Daftar</button>
-                    <button type="button" class="form-control mt-2 btn btn-secondary">Login</button>
+                    <a href="{{ url('login', []) }}" type="button" class="form-control mt-2 btn btn-secondary">Login</a>
                 </form>
             </div>
         </div>
