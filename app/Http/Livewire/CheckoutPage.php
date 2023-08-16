@@ -114,6 +114,8 @@ class CheckoutPage extends Component
         $dp->pelanggan_id = $pelanggan_id;
         $dp->alamat_pelanggan_id = $this->alamat->id;
         $dp->catatan_pelanggan = $this->catatan_pelanggan;
+        $dp->metode_pengiriman = $this->metode_pengiriman;
+        $dp->metode_pembayaran = $this->metode_pembayaran;
         $dp->subtotal = $this->totalPrice;
         $dp->ongkir = 0;
         $dp->diskon = 0;

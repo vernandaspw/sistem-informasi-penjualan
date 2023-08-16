@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\DataPenjualan;
+use App\Models\DataPenjualanItem;
 use Livewire\Component;
 
 class DataPenjualanPage extends Component
@@ -30,6 +31,8 @@ class DataPenjualanPage extends Component
         $d = DataPenjualan::find($id);
         $d->status = 'DIKIRIM';
         $d->save();
+
+        // $dpi = DataPenjualanItem::
     }
     public function diterima($id)
     {
