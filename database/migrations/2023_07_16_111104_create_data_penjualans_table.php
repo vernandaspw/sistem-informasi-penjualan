@@ -26,7 +26,7 @@ return new class extends Migration
             $table->decimal('diskon', 13, 2)->default(0);
             $table->decimal('total', 13, 2)->default(0);
             $table->enum('status', ['PAYMENT', 'PENDING', 'DIKEMAS', 'DIKIRIM', 'DITERIMA', 'SELESAI', 'GAGAL', "BATAL"]);
-
+            $table->enum('status_bayar', ['sudah', 'belum'])->default('belum');
             $table->string('no_mobil', 10)->nullable();
             $table->string('nama_sopir', 25)->nullable();
             $table->foreignId('disetujui_oleh')->nullable()->constrained('users')->onUpdate('cascade')->onDelete('set null');

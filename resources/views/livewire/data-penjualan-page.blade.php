@@ -37,6 +37,12 @@
                                     @if (auth()->user()->role == 'admin')
                                         @if ($data->status == 'PAYMENT')
                                             {{-- PENDING --}}
+                                            @if ($data->status_bayar == 'belum')
+                                                <button wire:click="sudahBayar('{{ $data->id }}')"
+                                                    class="btn btn-warning">Sudah bayar</button>
+                                            @endif
+                                        @endif
+                                        @if ($data->status_bayar == 'belum')
                                             <button wire:click="sudahBayar('{{ $data->id }}')"
                                                 class="btn btn-warning">Sudah bayar</button>
                                         @endif

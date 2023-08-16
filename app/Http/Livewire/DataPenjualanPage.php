@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\DataPenjualan;
-use App\Models\DataPenjualanItem;
 use Livewire\Component;
 
 class DataPenjualanPage extends Component
@@ -17,9 +16,10 @@ class DataPenjualanPage extends Component
     public function sudahBayar($id)
     {
         $d = DataPenjualan::find($id);
-        $d->status = 'PENDING';
+        $d->status_bayar = 'sudah';
         $d->save();
     }
+
     public function kemas($id)
     {
         $d = DataPenjualan::find($id);
