@@ -5,7 +5,7 @@
                 <div class="mb-4 text-center">
                     <h3><b>Register | Daftar</b></h3>
                 </div>
-                <form wire:submit.prevent='login'>
+                <form wire:submit.prevent='daftar'>
                     <div class="mb-2">
                         <div class="label">Nama lengkap</div>
                         <input class="form-control" type="text" placeholder="nama" wire:model='nama'>
@@ -18,8 +18,8 @@
                         <div class="label">Password</div>
                         <input class="form-control" type="text" placeholder="password" wire:model='password'>
                     </div>
-                    <button type="submit" class="form-control btn btn-primary">Login</button>
-                    <button type="button" class="form-control mt-2 btn btn-secondary">Daftar</button>
+                    <button type="submit" class="form-control btn btn-primary">Daftar</button>
+                    <button type="button" class="form-control mt-2 btn btn-secondary">Login</button>
                 </form>
             </div>
         </div>
