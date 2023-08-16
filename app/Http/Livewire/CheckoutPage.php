@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\AlamatPelanggan;
 use App\Models\DataPenjualan;
 use App\Models\DataPenjualanItem;
+use App\Models\DataStok;
 use Livewire\Component;
 
 class CheckoutPage extends Component
@@ -130,6 +131,13 @@ class CheckoutPage extends Component
             // $dpi->satuan_barang_id = $item['']
             $dpi->total_harga = $item['total_harga'];
             $dpi->save();
+
+            // total stok
+            $ds = new DataStok();
+            $ds->data_barang_id = $item['id'];
+            $ds->tipe = 'keluar';
+            $ds->stok_jual =  $item['qty'];
+            $ds->save();
         }
 
         session()->forget('cart');
