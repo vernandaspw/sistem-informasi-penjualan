@@ -45,7 +45,7 @@
                                             <button wire:click="kemas('{{ $data->id }}')"
                                                 class="btn btn-info">Kemas</button>
                                         @endif
-                                        @if ($data->status == 'DIKEMAS')
+                                        @if ($data->status == 'DIKEMAS' || $data->status == 'PAYMENT')
                                             {{-- dikirim --}}
                                             <button wire:click="dikirim('{{ $data->id }}')"
                                                 class="btn btn-primary">dikirim</button>
