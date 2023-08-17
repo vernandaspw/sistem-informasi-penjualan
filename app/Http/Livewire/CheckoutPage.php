@@ -144,7 +144,7 @@ class CheckoutPage extends Component
 
         session()->forget('cart');
 
-        redirect('/');
+        redirect('pesanan');
     }
 
 }
