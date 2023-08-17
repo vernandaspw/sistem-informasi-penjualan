@@ -156,11 +156,11 @@
                                     <div class="card-body p-3">
                                         <div class="d-flex justify-content-between">
                                             <div class="">{{ $data_penjualan->no_faktur }} - <small
-                                                    class="text-muted">{{ $data_penjualan->status }} - <span class="@if($data_penjualan->status_bayar == 'belum')
-                                                        text-danger
+                                                    class="text-muted">{{ $data_penjualan->status }} - <span
+                                                        class="@if ($data_penjualan->status_bayar == 'belum') text-danger
                                                         @else
-                                                        text-success
-                                                    @endif">{{ $data_penjualan->status_bayar }} bayar</span></small></div>
+                                                        text-success @endif">{{ $data_penjualan->status_bayar }}
+                                                        bayar</span></small></div>
                                         </div>
 
                                         <h5 class="card-title">{{ $data_penjualan->metode_pengiriman }} -
@@ -171,23 +171,31 @@
                                             @endforeach
                                         </div>
                                         <h4 class="card-title text-primary">@uang($data_penjualan->total)</h4>
-
-
+                                        @if ($data_penjualan->status_bayar == 'belum' && $data_penjualan->metode_pembayaran == 'transfer')
+                                            <div class="">Segera transfer ke rekening berikut</div>
+                                            <div class="d-flex">
+                                                @foreach ($banks as $bank)
+                                                    <div class="">{{ $bank->nama_bank }}
+                                                        <div>{{ $bank->norek }}</div>
+                                                        {{ $bank->an }}
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="card-footer">
-                                        <form wire:submit.prevent="sudah_bayar('{{ $data_penjualan->id }}')">
-                                            <input type="text" hidden wire:model='barang_qty' value="1">
-                                            @if($data_penjualan->status_bayar == 'belum')
-                                            <button wire:click='sudahBayar' type="button" class="btn btn-success">
+                                        @if ($data_penjualan->status_bayar == 'belum')
+                                            <button wire:click="sudahBayar('{{ $data_penjualan->id }}')" type="button"
+                                                class="btn btn-success">
                                                 Sudah bayar
                                             </button>
-                                            @endif
-                                            @if($data_penjualan->status == 'DIKIRIM')
-                                            <button wire:click='diterima' type="button" class="btn btn-primary">
+                                        @endif
+                                        @if ($data_penjualan->status == 'DIKIRIM')
+                                            <button wire:click="diterima('{{ $data_penjualan->id }}')" type="button"
+                                                class="btn btn-primary">
                                                 Pesanan Diterima
                                             </button>
-                                            @endif
-                                        </form>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

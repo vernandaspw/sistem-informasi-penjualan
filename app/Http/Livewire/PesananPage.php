@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\DataBank;
 use App\Models\DataPenjualan;
 use App\Models\KategoriBarang;
 use Livewire\Component;
@@ -15,6 +16,8 @@ class PesananPage extends Component
         $this->kategoris = KategoriBarang::latest()->get();
 
         $this->data_penjualans = DataPenjualan::where('pelanggan_id', auth()->user()->id)->latest()->get();
+
+        $this->banks = DataBank::get();
 
         return view('livewire.pesanan-page');
     }
