@@ -173,13 +173,18 @@
                                         <h4 class="card-title text-primary">@uang($data_penjualan->total)</h4>
                                         @if ($data_penjualan->status_bayar == 'belum' && $data_penjualan->metode_pembayaran == 'transfer')
                                             <div class="">Segera transfer ke rekening berikut</div>
-                                            <div class="d-flex">
-                                                @foreach ($banks as $bank)
-                                                    <div class="">{{ $bank->nama_bank }}
-                                                        <div>{{ $bank->norek }}</div>
-                                                        {{ $bank->an }}
-                                                    </div>
-                                                @endforeach
+                                            <div class="">
+                                                <ul class="mb-0">
+                                                    @foreach ($banks as $bank)
+                                                        <li>
+                                                            <div class=""><b>{{ $bank->nama_bank }},</b>
+                                                                {{ $bank->norek }}
+
+                                                            </div>
+                                                            <div>An: {{ $bank->an }}</div>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
                                             </div>
                                         @endif
                                     </div>
