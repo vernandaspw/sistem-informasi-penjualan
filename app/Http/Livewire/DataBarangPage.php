@@ -7,6 +7,7 @@ use App\Models\DataStok;
 use App\Models\GambarBarang;
 use App\Models\KategoriBarang;
 use App\Models\SatuanBarang;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -33,36 +34,45 @@ class DataBarangPage extends Component
     public $stok;
     public function buatData()
     {
-        $d = new DataBarang();
-        $d->kode_barang = $this->kode_barang;
-        $d->nama = $this->nama;
-        $d->deskripsi = $this->deskripsi;
-        $d->kategori_barang_id = $this->kategori_barang_id;
-        $d->satuan_barang_id = $this->satuan_barang_id;
-        $d->harga = $this->harga;
-        $d->save();
+        try {
+            DB::beginTransaction();
+            // dd($this->img);
 
-        if ($this->img) {
-            foreach ($this->img as $images) {
-                $store_img = $images->store('produk');
-                GambarBarang::create([
+            $d = new DataBarang();
+            $d->kode_barang = $this->kode_barang;
+            $d->nama = $this->nama;
+            $d->deskripsi = $this->deskripsi;
+            $d->kategori_barang_id = $this->kategori_barang_id;
+            $d->satuan_barang_id = $this->satuan_barang_id;
+            $d->harga = $this->harga;
+            $d->save();
+
+            if (isset($this->img)) {
+                foreach ($this->img as $images) {
+                    $store_img = $images->store('produk');
+                    GambarBarang::create([
+                        'data_barang_id' => $d->id,
+                        'img' => $store_img,
+                    ]);
+                }
+                $this->img = null;
+            }
+
+            if ($this->stok) {
+                DataStok::create([
                     'data_barang_id' => $d->id,
-                    'img' => $store_img,
+                    'tipe' => 'masuk',
+                    'stok_jual' => $this->stok,
+                    'stok_fisik' => $this->stok,
                 ]);
             }
-            $this->img = null;
-        }
 
-        if ($this->stok) {
-            DataStok::create([
-               'data_barang_id' => $d->id,
-               'tipe' => 'masuk',
-               'stok_jual' => $this->stok,
-               'stok_fisik' => $this->stok,
-            ]);
-        }
+            $this->buatPage = false;
 
-        $this->buatPage = false;
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+        }
 
         // $this->emit('success', ['pesan' => 'Berhasil buat data']);
     }
@@ -99,6 +109,7 @@ class DataBarangPage extends Component
 
     public function editData()
     {
+        // dd($this->img);
         $d = DataBarang::find($this->ID);
         $d->kode_barang = $this->kode_barang;
         $d->nama = $this->nama;
@@ -115,38 +126,37 @@ class DataBarangPage extends Component
                     'data_barang_id' => $d->id,
                     'tipe' => 'masuk',
                     'stok_jual' => $this->edit_stok_jual,
-                 ]);
+                ]);
             }
             if ($this->edit_stok_fisik) {
                 DataStok::create([
                     'data_barang_id' => $d->id,
                     'tipe' => 'masuk',
                     'stok_fisik' => $this->edit_stok_fisik,
-                 ]);
+                ]);
             }
 
-        }else{
+        } else {
             if ($this->edit_stok_jual) {
                 DataStok::create([
                     'data_barang_id' => $d->id,
                     'tipe' => 'keluar',
                     'stok_jual' => $this->edit_stok_jual,
-                 ]);
+                ]);
             }
             if ($this->edit_stok_fisik) {
                 DataStok::create([
                     'data_barang_id' => $d->id,
                     'tipe' => 'keluar',
                     'stok_fisik' => $this->edit_stok_fisik,
-                 ]);
+                ]);
             }
         }
 
-
-        if ($this->img) {
+        if (isset($this->img)) {
             // cek apakah punya gambar
             $cekImgs = GambarBarang::where('data_barang_id', $this->ID)->get();
-            if ($cekImgs->count() > 0) {
+            if (isset($cekImgs)) {
                 // hapus data
                 foreach ($cekImgs as $cekImg) {
                     Storage::delete($cekImg->img);
@@ -156,16 +166,16 @@ class DataBarangPage extends Component
                 foreach ($this->img as $images) {
                     $store_img = $images->store('produk');
                     GambarBarang::create([
-                        'data_barang_id' => $d->id,
+                        'data_barang_id' => $this->ID,
                         'img' => $store_img,
                     ]);
                 }
             } else {
                 foreach ($this->img as $images) {
-                    $store_img = $images->store('produk');
+                    $store_img1 = $images->store('produk');
                     GambarBarang::create([
-                        'data_barang_id' => $d->id,
-                        'img' => $store_img,
+                        'data_barang_id' => $this->ID,
+                        'img' => $store_img1,
                     ]);
                 }
             }
@@ -173,6 +183,7 @@ class DataBarangPage extends Component
         }
 
         $this->editPage = false;
+        $this->ID = null;
 
         // $this->emit('success', ['pesan' => 'Berhasil edit data']);
     }
