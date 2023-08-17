@@ -13,6 +13,18 @@ class SatuanBarangPage extends Component
         return view('livewire.satuan-barang-page');
     }
 
+    public function mount()
+    {
+
+    }
+
+    public function updated()
+    {
+        
+    }
+
+    public $datas = [];
+
     public $buatPage = false;
 
     public $nama;
@@ -36,7 +48,7 @@ class SatuanBarangPage extends Component
         $d = SatuanBarang::find($id);
         $this->ID = $id;
         $this->nama = $d->nama;
-      
+
         $this->editPage = true;
 
     }

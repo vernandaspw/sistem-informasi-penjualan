@@ -12,7 +12,6 @@ class PesananPage extends Component
     {
         $this->cart = session()->get('cart', []);
 
-
         $this->kategoris = KategoriBarang::latest()->get();
 
         $this->data_penjualans = DataPenjualan::where('pelanggan_id', auth()->user()->id)->latest()->get();
@@ -25,5 +24,23 @@ class PesananPage extends Component
         auth()->logout();
         session()->flush();
         redirect('login');
+    }
+
+    public function sudahBayar($id)
+    {
+        $d = DataPenjualan::find($id);
+        if ($d->status == 'PAYMENT') {
+            $d->status = 'PENDING';
+        }
+
+        $d->status_bayar = 'sudah';
+        $d->save();
+    }
+
+    public function diterima($id)
+    {
+        $d = DataPenjualan::find($id);
+        $d->status = 'DITERIMA';
+        $d->save();
     }
 }

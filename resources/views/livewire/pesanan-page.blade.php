@@ -13,7 +13,6 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Navbar brand -->
                 <a class="navbar-brand mt-2 mt-lg-0" href="#">
-                    <img src="{{ asset('indosteel.png') }}" height="15" alt="MDB Logo" loading="lazy" />
                     Indosteel Sumber Berkat
                 </a>
                 <!-- Left links -->
@@ -54,15 +53,14 @@
                         <span class="visually-hidden">unread messages</span>
                     </span>
                 </a>
-                @if(auth()->check())
-                <a href="{{ url('pesanan') }}" type="button" class=" px-2 me-4 text-white position-relative">
-                    <div class="text-center d-flex">Pesanan</div>
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-danger">
+                @if (auth()->check())
+                    <a href="{{ url('pesanan') }}" type="button" class=" px-2 me-4 text-white position-relative">
+                        <div class="text-center d-flex">Pesanan</div>
+                        {{-- <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-danger">
                         2
                         <span class="visually-hidden">unread messages</span>
-                    </span>
-                </a>
-
+                    </span> --}}
+                    </a>
                 @endif
 
 
@@ -99,100 +97,103 @@
     </nav>
     <div class="mt-5 pt-4">
         <div class="container-xl">
-            <div class="kategori">
-                <h4><b>Kategori barang</b></h4>
+            {{-- <div class="kategori">
                 <div class="mt-2">
                     <div class="d-flex flex-wrap">
                         <a href="javascript:void()"
-                        {{-- wire:click="$set('kategori_barang_id', null)" --}}
                             class="card border shadow-sm px-4 rounded-pill me-2 mb-2">
                             <div class="card-body p-2">
                                 Semua
                             </div>
                         </a>
-                        <a href="javascript:void()"
-                            class="card border shadow-sm px-4 rounded-pill me-2 mb-2">
+                        <a href="javascript:void()" class="card border shadow-sm px-4 rounded-pill me-2 mb-2">
                             <div class="card-body p-2">
                                 PAYMENT
                             </div>
                         </a>
-                        <a href="javascript:void()"
-                            class="card border shadow-sm px-4 rounded-pill me-2 mb-2">
+                        <a href="javascript:void()" class="card border shadow-sm px-4 rounded-pill me-2 mb-2">
                             <div class="card-body p-2">
                                 PENDING
                             </div>
                         </a>
-                        <a href="javascript:void()"
-                            class="card border shadow-sm px-4 rounded-pill me-2 mb-2">
+                        <a href="javascript:void()" class="card border shadow-sm px-4 rounded-pill me-2 mb-2">
                             <div class="card-body p-2">
                                 DIKEMAS
                             </div>
                         </a>
-                        <a href="javascript:void()"
-                            class="card border shadow-sm px-4 rounded-pill me-2 mb-2">
+                        <a href="javascript:void()" class="card border shadow-sm px-4 rounded-pill me-2 mb-2">
                             <div class="card-body p-2">
                                 DIKIRIM
                             </div>
                         </a>
-                        <a href="javascript:void()"
-                            class="card border shadow-sm px-4 rounded-pill me-2 mb-2">
+                        <a href="javascript:void()" class="card border shadow-sm px-4 rounded-pill me-2 mb-2">
                             <div class="card-body p-2">
                                 DITERIMA
                             </div>
                         </a>
-                        <a href="javascript:void()"
-                            class="card border shadow-sm px-4 rounded-pill me-2 mb-2">
+                        <a href="javascript:void()" class="card border shadow-sm px-4 rounded-pill me-2 mb-2">
                             <div class="card-body p-2">
                                 SELESAI
                             </div>
                         </a>
-                        <a href="javascript:void()"
-                            class="card border shadow-sm px-4 rounded-pill me-2 mb-2">
+                        <a href="javascript:void()" class="card border shadow-sm px-4 rounded-pill me-2 mb-2">
                             <div class="card-body p-2">
                                 GAGAL
                             </div>
                         </a>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="produk">
-                <h4><b>Barang Terbaru</b></h4>
+                <h4><b>Pesanan saya</b></h4>
                 <div class="mt-2">
-                    <div class="row">
-                        @foreach ($data_penjualans as $data_penjualan)
+                    @foreach ($data_penjualans as $data_penjualan)
+                        <div class="row mb-2">
                             <div class="col">
-                                <div class="card h-100">
+                                <div class="card ">
                                     {{-- {{ $data_penjualan->gambar_barangs->first() != null ? }} --}}
-                                    <div class="card-body">
+                                    <div class="card-body p-3">
                                         <div class="d-flex justify-content-between">
-                                            <div class="">{{ $data_penjualan->no_faktur }} - <small class="text-muted">{{ $data_penjualan->status }}</small></div>
+                                            <div class="">{{ $data_penjualan->no_faktur }} - <small
+                                                    class="text-muted">{{ $data_penjualan->status }} - <span class="@if($data_penjualan->status_bayar == 'belum')
+                                                        text-danger
+                                                        @else
+                                                        text-success
+                                                    @endif">{{ $data_penjualan->status_bayar }} bayar</span></small></div>
                                         </div>
 
-                                        <h5 class="card-title">{{ $data_penjualan->metode_pengiriman }} - {{ $data_penjualan->metode_pembayaran }}</h5>
+                                        <h5 class="card-title">{{ $data_penjualan->metode_pengiriman }} -
+                                            {{ $data_penjualan->metode_pembayaran }}</h5>
                                         <div class="">
                                             @foreach ($data_penjualan->data_penjualan_item as $dataitem)
-                                            {{ $dataitem->data_barang->nama }},
+                                                {{ $dataitem->data_barang->nama }},
                                             @endforeach
                                         </div>
                                         <h4 class="card-title text-primary">@uang($data_penjualan->total)</h4>
 
 
                                     </div>
-                                    {{-- <div class="card-footer">
-                                        <form wire:submit.prevent="addCart('{{ $data_penjualan->id }}')">
+                                    <div class="card-footer">
+                                        <form wire:submit.prevent="sudah_bayar('{{ $data_penjualan->id }}')">
                                             <input type="text" hidden wire:model='barang_qty' value="1">
-                                            <button type="submit" class="btn btn-primary form-control">
-                                                <i class="fas fa-shopping-cart text-white"></i> &nbsp;Tambah ke
-                                                Keranjang
+                                            @if($data_penjualan->status_bayar == 'belum')
+                                            <button wire:click='sudahBayar' type="button" class="btn btn-success">
+                                                Sudah bayar
                                             </button>
+                                            @endif
+                                            @if($data_penjualan->status == 'DIKIRIM')
+                                            <button wire:click='diterima' type="button" class="btn btn-primary">
+                                                Pesanan Diterima
+                                            </button>
+                                            @endif
                                         </form>
-                                    </div> --}}
+                                    </div>
                                 </div>
                             </div>
-                        @endforeach
 
-                    </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>

@@ -13,7 +13,6 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Navbar brand -->
                 <a class="navbar-brand mt-2 mt-lg-0" href="#">
-                    <img src="{{ asset('indosteel.png') }}" height="15" alt="MDB Logo" loading="lazy" />
                     Indosteel Sumber Berkat
                 </a>
                 <!-- Left links -->
@@ -57,11 +56,11 @@
                 @if (auth()->check())
                     <a href="{{ url('pesanan') }}" type="button" class=" px-2 me-4 text-white position-relative">
                         <div class="text-center d-flex">Pesanan</div>
-                        <span
+                        {{-- <span
                             class="position-absolute top-0 start-100 translate-middle badge rounded-pill badge-danger">
                             2
                             <span class="visually-hidden">unread messages</span>
-                        </span>
+                        </span> --}}
                     </a>
                 @endif
 

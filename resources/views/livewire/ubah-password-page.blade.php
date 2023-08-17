@@ -28,7 +28,7 @@
                 <label for="">password baru</label>
                 <input required wire:model='password_baru' type="text" class="form-control">
             </div>
-      
+
             <button type="submit" class="btn btn-primary form-control">Simpan</button>
         </form>
     </div>
